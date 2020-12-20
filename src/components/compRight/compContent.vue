@@ -4,7 +4,7 @@
       <div id='control'>
         <div style="color:blue">
           <a
-            v-on:click="Handlechange"
+            @click="Handlechange"
             href="#id01"
             id="Union"
             style="color: blue;"
@@ -12,12 +12,12 @@
           >
         </div>
         <div style="color:blue">
-          <a v-on:click="addtableline" href="#" id="Filter" style="color: blue;"
+          <a @click="addtableline" href="#" id="Filter" style="color: blue;"
             >Add Data &nbsp; &nbsp;</a
           >
         </div>
           <div style="color:blue">
-          <a v-on:click="FilterData" href="#" id="FilterData" style="color: blue;"
+          <a @click="FilterData" href="#" id="FilterData" style="color: blue;"
             >Filter data &nbsp; &nbsp;</a
           >
         </div>
@@ -27,20 +27,20 @@
       </div>
     </div>
     <div class="flex-container">
-      <div v-on:click="sortData" class="style col1" style="border-top-left-radius: 10px">Form ID#</div>
-      <div class="style col2" v-on:click="sortData">TemPlate Name</div>
-      <div class="style col3" v-on:click="sortData">Type</div>
-      <div class="style col4" v-on:click="sortData">Company</div>
-      <div class="style col5" v-on:click="sortData">Version Date</div>
-      <div class="style col6" v-on:click="sortData">Expiration D</div>
-      <div class="style col7" v-on:click="sortData">ACTIVE</div>
+      <div @click="sortData" class="style col1" style="border-top-left-radius: 10px">Form ID#</div>
+      <div class="style col2" @click="sortData">TemPlate Name</div>
+      <div class="style col3" @click="sortData">Type</div>
+      <div class="style col4" @click="sortData">Company</div>
+      <div class="style col5" @click="sortData">Version Date</div>
+      <div class="style col6" @click="sortData">Expiration D</div>
+      <div class="style col7" @click="sortData">ACTIVE</div>
       <div class="style col8" style="border-top-right-radius: 10px"></div>
     </div>
     <div id="tablefull">
       <div class="tdata">
         <div
           class="flex-container"
-          v-for="(user,idx) in form"
+          v-for="(user,idx) in formtam"
           :key="idx"
           v-on:dblclick="Edit_Line"
         >
@@ -215,30 +215,38 @@
             v-if="user.node2 == 'Edit'"
             style="text-align: center"
           >
-          <div class="dropdown">
-            <a v-on:click="optionSetting" class="dropbtn">...</a>
-            <div id="myDropdown" class="dropdown-content">
+          <!-- <div class="dropup">
+            <a @click="optionSetting" class="dropbtn">...</a>
+             <div class="dropup-content">
               <a href="#home">Home</a>
               <a href="#about">About</a>
               <a href="#contact">Contact</a>
             </div>
+          </div> -->
+        <div class="dropup">
+          <button class="dropbtn" @click="dropLeft" check="0">...</button>
+          <div class="dropup-content">
+            <button @click="edit">Edit</button>
+            <button href="#id01" @click="removeLine">remove</button>
+            <!-- <button>Link 3</button> -->
           </div>
+        </div>
           </div>
           <div
             class="col8"
             v-else-if="user.node2 == 'Cancel'"
             style="text-align: center"
           >
-            <a href="#" class="add" v-on:click="Confirm">Confirm</a>
-            <a href="#" class="remove" v-on:click="Cancel">Cancel</a>
+            <a href="#" class="add" @click="Confirm">Confirm</a>
+            <a href="#" class="remove" @click="Cancel">Cancel</a>
           </div>
           <div
             class="col8"
             v-else-if="user.node2 == 'Cancel_row'"
             style="text-align: center"
           >
-            <a href="#" class="add" v-on:click="Confirm_row">Confirm</a>
-            <a href="#" class="remove" v-on:click="Cancel_row">Cancel</a>
+            <a href="#" class="add" @click="Confirm_row">Confirm</a>
+            <a href="#" class="remove" @click="Cancel_row">Cancel</a>
           </div>
         </div>
       </div>
@@ -259,11 +267,11 @@
 export default {
   name: 'container',
   props: {
-    index_edit: String
+    // index_edit: String
   },
   data () {
     return {
-      form1: [],
+      index_edit: '',
       idform: '',
       Temlate: '',
       Type: '',
@@ -342,20 +350,26 @@ export default {
   },
   methods: {
 
-    giang: function () {
-      this.users.push(this.formtam)
+    dropLeft (e) { // kiểm tra dropup hiển thị và ẩn
+      let checkEvent
+      try {
+        checkEvent = e.target.getAttribute('check') // nếu lỗi thì e là một đối tượng được gọi hàm trong methods
+        checkEvent = e.target
+      } catch (err) {
+        checkEvent = e
+      }
+      if (checkEvent.getAttribute('check') === '0') {
+        checkEvent.parentNode.style = 'display: block'
+        checkEvent.parentNode.childNodes[2].style = 'display: block'
+        checkEvent.setAttribute('check', '1')
+      } else {
+        checkEvent.parentNode.style = 'display: inline-block'
+        checkEvent.parentNode.childNodes[2].style = 'display: none'
+        checkEvent.setAttribute('check', '0')
+      }
     },
-    sortData (e) {
-      let tt = e.target.innerHTML
-      let data = {haha: tt}
-      this.$emit('SortDL', data)
-    },
-    optionSetting (e) {
-      alert('ahaha')
-      document.getElementById('myDropdown').classList.toggle('show')
-    },
-    remove (e) {
-      const elementtable = event.target.parentNode.parentNode.childNodes
+    edit (event) {
+      let elementtable = event.target.parentNode.parentNode.parentNode.parentNode.childNodes
       let getid = elementtable[0].innerHTML
       let getTemlate = elementtable[2].innerHTML
       let getType = elementtable[4].innerHTML
@@ -363,165 +377,67 @@ export default {
       let getVersionDate = elementtable[8].innerHTML
       let getExpirationDate = elementtable[10].innerHTML
       let getActive = elementtable[12].innerHTML
-      let thaydoi = 'Remove'
       let data1 = {
-        id: getid,
+        idfrom: getid,
         Temlate: getTemlate,
         Type: getType,
         Company: getCompany,
         ExpirationDate: getExpirationDate,
         VersionDate: getVersionDate,
         Active: getActive,
-        Change: thaydoi
+        node1: 'Confirm_row',
+        node2: 'Cancel_row'
       }
-      this.$emit('removeline', data1)
-    },
-    Cancel (e) {
-      let getidaddfilter = e.target.parentNode.parentNode.childNodes
-      let id = getidaddfilter[0].innerHTML
-      let DataAddfilter = {
-        id: id
-      }
-      this.$emit('Cancel_AddFilter', DataAddfilter)
-    },
-    ConfirmEnter_row (e) {
-      this.Confirm_row(e)
-    },
-    ConfirmEnter (e) {
-      this.Confirm(e)
-    },
-    Confirm (e) {
-      const lengthForm = e.target.parentNode.parentNode
-      let Temlate = lengthForm.childNodes[2].childNodes[0].value.length
-      let Type = lengthForm.childNodes[4].childNodes[0].value.length
-      let Company = lengthForm.childNodes[6].childNodes[0].value.length
-      let VersionDate = lengthForm.childNodes[8].childNodes[0].value.length
-      let ExpirationDate = lengthForm.childNodes[10].childNodes[0].value.length
-      let Active = lengthForm.childNodes[12].childNodes[0].value.length
-      if (Temlate === 0 || Type === 0 || Company === 0 || VersionDate === 0 || ExpirationDate === 0 || Active === 0) {
-        alert('Trường Dữ Liệu Chưa được nhập')
-      } else {
-        let getid = e.target.parentNode.parentNode.childNodes[0].innerHTML
-        let type, Acti
-        if (this.Type === '1') type = 'Payoll'
-        if (this.Type === '2') type = 'Production'
-        if (this.Active === '1') Acti = 'Active'
-        if (this.Active === '2') Acti = 'Archive'
-        let DataAddfilterC = {
-          idfrom: getid,
-          Temlate: this.Temlate,
-          Type: type,
-          Company: this.Company,
-          VersionDate: this.VersionDate,
-          ExpirationDate: this.ExpirationDate,
-          Active: Acti,
-          node1: 'Remove',
-          node2: 'Edit'
-        }
-        this.$emit('Confirm_AddFilter', DataAddfilterC)
-        // cập nhật rỗng cho các input khi them line mới
-        this.idform = ''
-        this.Temlate = ''
-        this.Type = ''
-        this.Company = ''
-        this.VersionDate = ''
-        this.ExpirationDate = ''
-        this.Active = ''
-      }
-    },
-    Confirm_row (e) {
-      const lengthForm = e.target.parentNode.parentNode
-      let Temlate = lengthForm.childNodes[2].childNodes[0].value.length
-      let Type = lengthForm.childNodes[4].childNodes[0].value.length
-      let Company = lengthForm.childNodes[6].childNodes[0].value.length
-      let VersionDate = lengthForm.childNodes[8].childNodes[0].value.length
-      let ExpirationDate = lengthForm.childNodes[10].childNodes[0].value.length
-      let Active = lengthForm.childNodes[12].childNodes[0].value.length
-      if (Temlate === 0 || Type === 0 || Company === 0 || VersionDate === 0 || ExpirationDate === 0 || Active === 0) {
-        alert('Trường Dữ Liệu Chưa được nhập')
-      } else {
-        let getidaddfilterC = e.target.parentNode.parentNode.childNodes
-        let id = getidaddfilterC[0].innerHTML
-        let getTemlate = this.formtam[this.index_edit].Temlate
+      let index = 0
+      let check = true
 
-        let getType = this.formtam[this.index_edit].Type
-        let getCompany = this.formtam[this.index_edit].Company
-        let getVersionDate = this.formtam[this.index_edit].VersionDate
-        let getExpirationDate = this.formtam[this.index_edit].ExpirationDate
-        let getActive = this.formtam[this.index_edit].Active
-        let DataAddfilterC = {
-          idfrom: id,
-          Temlate: getTemlate,
-          Type: getType,
-          Company: getCompany,
-          VersionDate: getVersionDate,
-          ExpirationDate: getExpirationDate,
-          Active: getActive,
-          node1: 'Remove',
-          node2: 'Edit'
+      for (let [i, v] of this.form.entries()) {
+        if (String(data1.idfrom) === String(v.idfrom)) {
+          index = i
         }
-        this.$emit('Confirm_Edit', DataAddfilterC)
-        // cập nhật rỗng cho các input khi them line mới
-        this.Temlate = ''
-        this.Type = ''
-        this.Company = ''
-        this.VersionDate = ''
-        this.ExpirationDate = ''
-        this.Active = ''
+        if (v.node2 === 'Cancel_row' || v.node2 === 'Cancel') {
+          check = false
+        }
+      }
+
+      if (check) {
+        this.index_edit = index
+        data1.ExpirationDate = this.convertDate(data1.ExpirationDate.trim(), '-', 'dd_mm_yyyy')
+        data1.VersionDate = this.convertDate(data1.VersionDate.trim(), '-', 'dd_mm_yyyy')
+        this.form[-2] = this.form[index]
+        this.form.splice(index, 1, data1)
+      }
+
+      this.form[-2].node2 = 'Edit'
+      this.dropLeft(event.target.parentNode.parentNode.childNodes[0])
+      this.formtam = []
+      for (const [i] of this.form.entries()) {
+        this.formtam.push(this.form[i])
       }
     },
-    Cancel_row (e) {
-      let getid = e.target.parentNode.parentNode.childNodes
-      let id = getid[0].innerHTML
-      let Data = {
-        idfrom: id
+    removeLine (e) {
+      this.evenremove = e
+      this.formtam = []
+      for (let i = 0; i <= this.form.length - 1; i++) {
+        this.formtam.push(this.form[i])
       }
-      this.$emit('Cancel_Edit_row', Data)
-      // cập nhật rỗng cho các input khi them line mới
     },
-    Edit (e) {
-      let elementtable = event.target.parentNode.parentNode.childNodes
-      let getid = elementtable[0].innerHTML
-      let getTemlate = elementtable[2].innerHTML
-      let getType = elementtable[4].innerHTML
-      let getCompany = elementtable[6].innerHTML
-      let getVersionDate = elementtable[8].innerHTML
-      let getExpirationDate = elementtable[10].innerHTML
-      let getActive = elementtable[12].innerHTML
-      let data1 = {
-        idfrom: getid,
-        Temlate: getTemlate,
-        Type: getType,
-        Company: getCompany,
-        ExpirationDate: getExpirationDate,
-        VersionDate: getVersionDate,
-        Active: getActive,
-        node1: 'Confirm_row',
-        node2: 'Cancel_row'
+    convertDate: function (date, tt, type) {
+      let ngay
+      let thang
+      let nam
+      if (type === 'dd_mm_yyyy') {
+        ngay = date.slice(0, 2)
+        thang = date.slice(3, 5)
+        nam = date.slice(6, 10)
+        return nam + tt + thang + tt + ngay
       }
-      this.$emit('Edit', data1)
-    },
-    Edit_Line (e) {
-      let elementtable = event.target.parentNode.childNodes
-      let getid = elementtable[0].innerHTML
-      let getTemlate = elementtable[2].innerHTML
-      let getType = elementtable[4].innerHTML
-      let getCompany = elementtable[6].innerHTML
-      let getVersionDate = elementtable[8].innerHTML
-      let getExpirationDate = elementtable[10].innerHTML
-      let getActive = elementtable[12].innerHTML
-      let data1 = {
-        idfrom: getid,
-        Temlate: getTemlate,
-        Type: getType,
-        Company: getCompany,
-        ExpirationDate: getExpirationDate,
-        VersionDate: getVersionDate,
-        Active: getActive,
-        node1: 'Confirm_row',
-        node2: 'Cancel_row'
+      if (type === 'yyyy_mm_dd') {
+        nam = date.slice(0, 4)
+        thang = date.slice(5, 7)
+        ngay = date.slice(8, 10)
+        return ngay + tt + thang + tt + nam
       }
-      this.$emit('Editline', data1)
     }
   }
 }
@@ -607,6 +523,7 @@ a {
   padding: 5px;
 }
 .flex-container {
+  z-index: 1;
   min-width: 1100px;
   padding: 0px;
   margin: 0px;
@@ -753,36 +670,44 @@ a {
   width: 10%;
 }
 .dropbtn {
-  color: red;
-  padding: 16px;
-  font-size: 36px;
-  border: none;
-  cursor: pointer;
+  font-size: 20px;
+  height: 5px;
+  background-color: #ffffff;
+  border: 0px;
+  outline:#ffffff
 }
 
-.dropdown {
+.dropup {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-content {
+.dropup-content {
+  border: 1px solid blue;
   display: none;
   position: absolute;
-  background-color: #000000;
-  min-width: 40px;
-  overflow: auto;
-  bottom: 00px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  background-color: #ffffff;
+  min-width: 60px;
+  bottom: -20px;
+  right: 85px;
   z-index: 1;
 }
 
-.dropdown-content a {
+.dropup-content>button {
+ background-color: #ffffff;
   color: black;
-  color: red;
-  padding: 12px 16px;
+  padding: 4px;
+  border: none;
+  outline: none;
   text-decoration: none;
-  display: block;
+  width: 100%;
+  display: inline-block;
 }
 
-.show {display: block;}
+.dropup-content>button:hover {background-color: rgb(204, 204, 204)}
+
+/* .dropup:hover .dropup-content {
+  display: block;
+} */
+
 </style>
