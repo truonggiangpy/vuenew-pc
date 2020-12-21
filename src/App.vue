@@ -13,13 +13,11 @@
 <script>
 import compLeft from './components/compLeft'
 import compRight from './components/compRight'
-import compFilter from './components/compFilter'
 export default {
   name: 'App',
   components: {
     compLeft,
-    compRight,
-    compFilter
+    compRight
   }
 }
 </script>

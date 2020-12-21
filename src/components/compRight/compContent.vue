@@ -16,7 +16,7 @@
           >
         </div>
           <div style="color:blue">
-          <a @click="FilterData" href="#" id="FilterData" style="color: blue;"
+          <a @click="filterData" href="#" id="FilterData" style="color: blue;"
             >Filter data &nbsp; &nbsp;</a
           >
         </div>
@@ -60,7 +60,7 @@
           <div class="col2" v-else-if="user.node2 == 'Cancel_row'">
             <input
               v-on:keyup.esc="cancelEdit"
-              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.enter="confirmEnter"
               style="width: 90%; flex-grow: 1"
               type="text"
               class="create"
@@ -86,7 +86,7 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <select
-              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.enter="confirmEnter"
               v-on:keyup.esc="cancelEdit"
               style="width: 90%"
               class="create"
@@ -114,7 +114,7 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <input
-              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.enter="confirmEnter"
               v-on:keyup.esc="cancelEdit"
               style="width: 90%"
               v-model="arrayTemtam[index_edit].Company"
@@ -142,7 +142,7 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <input
-              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.enter="confirmEnter"
               v-on:keyup.esc="cancelEdit"
               style="width: 90%"
               v-model="arrayTemtam[index_edit].VersionDate"
@@ -169,7 +169,7 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <input
-              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.enter="confirmEnter"
               v-on:keyup.esc="cancelEdit"
               style="width: 90%"
               v-model="arrayTemtam[index_edit].ExpirationDate"
@@ -196,7 +196,7 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <select
-              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.enter="confirmEnter"
               v-on:keyup.esc="cancelEdit"
               v-model="arrayTemtam[index_edit].Active"
               style="width: 90%"
@@ -268,15 +268,23 @@
      :confirmBoolean="confirmBoolean"
      v-show="showModel"
     />
+    <compFilter
+    @confirmFilter="confirmFilter"
+    @closeFilter="closeFilter"
+    @allData="allData"
+    v-show="showFilter"
+    />
   </div>
 
 </template>
 <script>
 import compCreateUnion from './compCreateUnion.vue'
+import compFilter from './compFilter.vue'
 export default {
   name: 'container',
   components: {
-    compCreateUnion
+    compCreateUnion,
+    compFilter
   },
   props: {
     // index_edit: String
@@ -284,6 +292,7 @@ export default {
   data () {
     return {
       evenRemove: {},
+      showFilter: false,
       showModel: false,
       confirmBoolean: '',
       index_edit: '',
@@ -297,7 +306,7 @@ export default {
       search: '',
       arrayTemtam: [],
       arrayTem: [
-        // Temlate: this.Temlate,Type: this.Type, Company: this.Company,VersionDate: this.VersionDate, ExpirationDate: this.ExpirationDate, Active: this.Active
+        // Temlate: this.Temlate,Type: this.Type, Company: this.Company,VersionDate: this.VersionDate, ExpirationDate: expirationDate, Active: this.Active
         {
           idfrom: '1115',
           Temlate: 'bahaha hihhi ',
@@ -489,7 +498,7 @@ export default {
       this.Type = ''
       this.Company = ''
       this.VersionDate = ''
-      this.ExpirationDate = ''
+      this.expirationDate = ''
       this.Active = ''
     },
     cancelEdit (e) {
@@ -645,7 +654,7 @@ export default {
         this.arrayTemtam.push(this.arrayTem[i])
       }
     },
-    ConfirmEnter (e) {
+    confirmEnter (e) {
       this.confirmEdit(e)
     },
     confirmCancel (e) { // dùng để xác nhận cancel khi đang tạo teamplate
@@ -682,7 +691,7 @@ export default {
       this.Type = ''
       this.Company = ''
       this.VersionDate = ''
-      this.ExpirationDate = ''
+      this.expirationDate = ''
       this.Active = ''
     },
     confirmAddLine (e) {
@@ -703,7 +712,7 @@ export default {
           Type: type,
           Company: this.Company,
           VersionDate: this.VersionDate,
-          ExpirationDate: this.ExpirationDate,
+          ExpirationDate: this.expirationDate,
           Active: Acti,
           node1: 'Remove',
           node2: 'Edit'
@@ -716,7 +725,7 @@ export default {
         //   this.Type = "";
         //   this.Company = "";
         //   this.VersionDate = "";
-        //   this.ExpirationDate = "";
+        //   expirationDate = "";
         //   this.Active = "";
         this.arrayTemtam = []
         for (let i = 0; i <= this.arrayTem.length - 1; i++) {
@@ -728,7 +737,7 @@ export default {
         this.Type = ''
         this.Company = ''
         this.VersionDate = ''
-        this.ExpirationDate = ''
+        this.expirationDate = ''
         this.Active = ''
       }
     },
@@ -741,7 +750,54 @@ export default {
     },
     sortData (e) {
     },
-    FilterData (e) {
+    filterData (e) {
+      this.showFilter = true
+    },
+    confirmFilter (e) {
+      this.showFilter = false
+      this.arrayTemtam = []
+      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
+        this.arrayTemtam.push(this.arrayTem[i])
+      }
+      if (e.checkall === 'loc') {
+        for (let i = this.arrayTemtam.length - 1; i >= 0; i--) {
+          if (this.arrayTemtam[i].Type.includes(e.Type)) {
+          } else {
+            this.arrayTemtam.splice(i, 1)
+          }
+        }
+        for (let i = this.arrayTemtam.length - 1; i >= 0; i--) {
+          if (this.arrayTemtam[i].Company.includes(e.Company)) {
+          } else {
+            this.arrayTemtam.splice(i, 1)
+          }
+        }
+        for (let i = this.arrayTemtam.length - 1; i >= 0; i--) {
+          if (this.arrayTemtam[i].Active.includes(e.Active)) {
+          } else {
+            this.arrayTemtam.splice(i, 1)
+          }
+        }
+        if (e.VersionDate !== '' && e.VersionDate[4] === '-') { e.VersionDate = this.convertDate(e.VersionDate, '-', 'yyyy_mm_dd') }
+        for (let i = this.arrayTemtam.length - 1; i >= 0; i--) {
+          if (this.arrayTemtam[i].VersionDate.includes(e.VersionDate)) {
+          } else {
+            this.arrayTemtam.splice(i, 1)
+          }
+        }
+      } else {
+      }
+      this.checkFilterData = ''
+    },
+    closeFilter (e) {
+      this.showFilter = false
+    },
+    allData (e) {
+      this.showFilter = false
+      this.arrayTemtam = []
+      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
+        this.arrayTemtam.push(this.arrayTem[i])
+      }
     },
     dropLeft (e) { // kiểm tra dropup hiển thị và ẩn
       let checkEvent
