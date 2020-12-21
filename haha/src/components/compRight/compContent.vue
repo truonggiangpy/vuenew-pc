@@ -4,14 +4,15 @@
       <div id='control'>
         <div style="color:blue">
           <a
-            @click="clickCreateTemp"
+            @click="createTemp"
+            href="#id01"
             id="Union"
             style="color: blue;"
             >+ Union Templates &nbsp; &nbsp;</a
           >
         </div>
         <div style="color:blue">
-          <a @click="addTableLine" href="#" id="Filter" style="color: blue;"
+          <a @click="addtableline" href="#" id="Filter" style="color: blue;"
             >Add Data &nbsp; &nbsp;</a
           >
         </div>
@@ -47,8 +48,8 @@
           <div class="col2" v-if="user.node2 == 'Edit'">{{ user.Temlate }}</div>
           <div class="col2" v-else-if="user.node2 == 'Cancel'">
             <input
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              v-on:keyup.esc="Cancel"
+              v-on:keyup.enter="ConfirmEnter"
               style="width: 90%; flex-grow: 1"
               type="text"
               class="create"
@@ -59,7 +60,7 @@
           </div>
           <div class="col2" v-else-if="user.node2 == 'Cancel_row'">
             <input
-              v-on:keyup.esc="cancelEdit"
+              v-on:keyup.esc="Cancel_row"
               v-on:keyup.enter="ConfirmEnter"
               style="width: 90%; flex-grow: 1"
               type="text"
@@ -72,8 +73,8 @@
           <div class="col3" v-if="user.node2 == 'Edit'">{{ user.Type }}</div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <select
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.esc="Cancel"
               style="width: 90%"
               class="create"
               v-model="Type"
@@ -87,7 +88,7 @@
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <select
               v-on:keyup.enter="ConfirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              v-on:keyup.esc="Cancel_row"
               style="width: 90%"
               class="create"
               v-model="arrayTemtam[index_edit].Type"
@@ -101,8 +102,8 @@
           <div class="col4" v-if="user.node2 == 'Edit'">{{ user.Company }}</div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <input
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.esc="Cancel"
               style="width: 90%"
               v-model="Company"
               type="text"
@@ -115,7 +116,7 @@
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <input
               v-on:keyup.enter="ConfirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              v-on:keyup.esc="Cancel_row"
               style="width: 90%"
               v-model="arrayTemtam[index_edit].Company"
               type="text"
@@ -130,8 +131,8 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <input
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.esc="Cancel"
               style="width: 90%"
               v-model="VersionDate"
               type="date"
@@ -143,7 +144,7 @@
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <input
               v-on:keyup.enter="ConfirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              v-on:keyup.esc="Cancel_row"
               style="width: 90%"
               v-model="arrayTemtam[index_edit].VersionDate"
               type="date"
@@ -157,8 +158,8 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <input
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.esc="Cancel"
               style="width: 90%"
               v-model="ExpirationDate"
               type="date"
@@ -170,7 +171,7 @@
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <input
               v-on:keyup.enter="ConfirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              v-on:keyup.esc="Cancel_row"
               style="width: 90%"
               v-model="arrayTemtam[index_edit].ExpirationDate"
               type="date"
@@ -182,8 +183,8 @@
           <div class="col7" v-if="user.node2 == 'Edit'">{{ user.Active }}</div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <select
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              v-on:keyup.enter="ConfirmEnter"
+              v-on:keyup.esc="Cancel"
               v-model="Active"
               style="width: 90%"
               class="create"
@@ -197,7 +198,7 @@
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <select
               v-on:keyup.enter="ConfirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              v-on:keyup.esc="Cancel_row"
               v-model="arrayTemtam[index_edit].Active"
               style="width: 90%"
               class="create"
@@ -236,8 +237,8 @@
             v-else-if="user.node2 == 'Cancel'"
             style="text-align: center"
           >
-            <a href="#" class="add" @click="confirmAddLine">Confirm</a>
-            <a href="#" class="remove" @click="cancelAddLine">Cancel</a>
+            <a href="#" class="add" @click="Confirm">Confirm</a>
+            <a href="#" class="remove" @click="Cancel">Cancel</a>
           </div>
           <div
             class="col8"
@@ -260,13 +261,9 @@
 
     </div>
     <compCreateUnion
-     :evenRemove="evenRemove"
+     v-bind:evenRemove="evenRemove"
      @confirmRemove="confirmRemove"
-     @cancelRemove="cancelRemove"
-     @createTem="createTem"
-     @confirmCancel="confirmCancel"
      :confirmBoolean="confirmBoolean"
-     v-show="showModel"
     />
   </div>
 
@@ -284,7 +281,6 @@ export default {
   data () {
     return {
       evenRemove: {},
-      showModel: false,
       confirmBoolean: '',
       index_edit: '',
       idarrayTem: '',
@@ -294,7 +290,6 @@ export default {
       VersionDate: '',
       ExpirationDate: '',
       Active: '',
-      search: '',
       arrayTemtam: [],
       arrayTem: [
         // Temlate: this.Temlate,Type: this.Type, Company: this.Company,VersionDate: this.VersionDate, ExpirationDate: this.ExpirationDate, Active: this.Active
@@ -357,26 +352,12 @@ export default {
     }
   },
   created () {
-    for (let [, v] of this.arrayTem.entries()) {
-      this.arrayTemtam.push(v)
+    for (let i = 0; i <= this.arrayTem.length - 1; i++) {
+      this.arrayTemtam.push(this.arrayTem[i])
     }
   },
   computed: {
 
-  },
-  watch: {
-    search  () {
-      this.arrayTemtam = []
-      for (let [i] of this.arrayTem.entries()) {
-        this.arrayTemtam.push(this.arrayTem[i])
-      }
-      for (let i = this.arrayTemtam.length - 1; i >= 0; i--) {
-        if (this.arrayTemtam[i].Temlate.includes(this.search)) {
-        } else {
-          this.arrayTemtam.splice(i, 1)
-        }
-      }
-    }
   },
   methods: {
     edit (event) {
@@ -558,7 +539,6 @@ export default {
       }
     },
     removeLine (e) {
-      this.showModel = true
       const elementtable = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes
       let getid = elementtable[0].innerHTML
       let getTemlate = elementtable[2].innerHTML
@@ -583,7 +563,6 @@ export default {
       this.evenRemove = data1
     },
     confirmRemove (e) {
-      this.showModel = false
       let index = 0
       let check = true
       for (let [i] of this.arrayTem.entries()) {
@@ -605,11 +584,7 @@ export default {
         this.arrayTemtam.push(v)
       }
     },
-    cancelRemove (e) {
-      this.showModel = e
-    },
-    clickCreateTemp (e) {
-      this.showModel = true
+    createTemp (e) {
       this.confirmBoolean = 'Create'
       // console.log("apphihi"+ this.create_confirm_boolean)
       // this.$emit('changeeven',e)
@@ -618,130 +593,19 @@ export default {
         this.arrayTemtam.push(v)
       }
     },
-    createTem (e) {
-      this.showModel = false
-      let i = 0
-      let check = true
-      e.ExpirationDate = this.convertDate(e.ExpirationDate, '-', 'yyyy_mm_dd')
-      e.VersionDate = this.convertDate(e.VersionDate, '-', 'yyyy_mm_dd')
-      e.idfrom = this.randomNumber()
-      if (this.arrayTem.length === 0) { this.arrayTem[-1] = e }
-      // if (this.arrayTem[this.arrayTem.length - 1].node2 !== 'Cancel') {
-      //   this.arrayTem.push(e) // cập nhật lại giá trị arrayTem
-      for (i = 0; i < this.arrayTem.length; i++) {
-        if (this.arrayTem[i].node2 === 'Cancel_row' || this.arrayTem[i].node2 === 'Cancel') {
-          check = false
-        }
-      }
-      if (check) {
-        this.arrayTem.push(e)
-      } else {
-        alert('Đang Tạo Bảng bằng dòng, hãy Bấm Cancel để quay lại')
-      }
-      this.arrayTem.Temlate = this.arrayTem.Temlate + ' '
-      this.create_confirm_boolean = e.return_create_confirm_boolean
-      this.arrayTemtam = []
-      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
-        this.arrayTemtam.push(this.arrayTem[i])
-      }
-    },
     ConfirmEnter (e) {
       this.confirmEdit(e)
     },
-    confirmCancel (e) { // dùng để xác nhận cancel khi đang tạo teamplate
-      this.showModel = false
-    },
-    addTableLine (e) {
-      var data = {
-        idfrom: '',
-        Temlate: '',
-        Type: '',
-        Company: '',
-        VersionDate: '',
-        ExpirationDate: '',
-        Active: '',
-        node1: 'Confirm',
-        node2: 'Cancel'
-      }
-      let i = 0
-      let check = true
-      for (i = 0; i < this.arrayTem.length; i++) {
-        if (this.arrayTem[i].node2 === 'Cancel_row' || this.arrayTem[i].node2 === 'Cancel') {
-          check = false
-        }
-      }
-      if (check) {
-        data.idfrom = this.randomNumber()
-        this.arrayTem.push(data)
-      }
-      this.arrayTemtam = []
-      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
-        this.arrayTemtam.push(this.arrayTem[i])
-      }
-      this.Temlate = ''
-      this.Type = ''
-      this.Company = ''
-      this.VersionDate = ''
-      this.ExpirationDate = ''
-      this.Active = ''
-    },
-    confirmAddLine (e) {
-      const lengtharrayTem = e.target.parentNode.parentNode
-      let Temlate = lengtharrayTem.childNodes[2].childNodes[0].value.length
-      if (Temlate === 0) {
-        alert('Trường Dữ Liệu Chưa được nhập')
-      } else {
-        let getid = e.target.parentNode.parentNode.childNodes[0].innerHTML
-        let type, Acti
-        if (this.Type === '1') type = 'Payoll'
-        if (this.Type === '2') type = 'Production'
-        if (this.Active === '1') Acti = 'Active'
-        if (this.Active === '2') Acti = 'Archive'
-        let DataAddfilterC = {
-          idfrom: getid,
-          Temlate: this.Temlate,
-          Type: type,
-          Company: this.Company,
-          VersionDate: this.VersionDate,
-          ExpirationDate: this.ExpirationDate,
-          Active: Acti,
-          node1: 'Remove',
-          node2: 'Edit'
-        }
-        DataAddfilterC.ExpirationDate = this.convertDate(DataAddfilterC.ExpirationDate, '-', 'yyyy_mm_dd')
-        DataAddfilterC.VersionDate = this.convertDate(DataAddfilterC.VersionDate, '-', 'yyyy_mm_dd')
-        this.arrayTem.splice(this.arrayTem.length - 1, 1, DataAddfilterC)// thay thế phần từ cuối cùng
-        // this.arrayTem.push(e)
-        //   this.Temlate = "";
-        //   this.Type = "";
-        //   this.Company = "";
-        //   this.VersionDate = "";
-        //   this.ExpirationDate = "";
-        //   this.Active = "";
-        this.arrayTemtam = []
-        for (let i = 0; i <= this.arrayTem.length - 1; i++) {
-          this.arrayTemtam.push(this.arrayTem[i])
-        }
-        // cập nhật rỗng cho các input khi them line mới
-        this.idarrayTem = ''
-        this.Temlate = ''
-        this.Type = ''
-        this.Company = ''
-        this.VersionDate = ''
-        this.ExpirationDate = ''
-        this.Active = ''
-      }
-    },
-    cancelAddLine (e) {
-      this.arrayTem.pop()
-      this.arrayTemtam = []
-      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
-        this.arrayTemtam.push(this.arrayTem[i])
-      }
-    },
+
     sortData (e) {
     },
+    search (e) {
+    },
+    addtableline (e) {
+    },
     FilterData (e) {
+    },
+    Handlechange (e) {
     },
     dropLeft (e) { // kiểm tra dropup hiển thị và ẩn
       let checkEvent
@@ -777,22 +641,6 @@ export default {
         ngay = date.slice(8, 10)
         return ngay + tt + thang + tt + nam
       }
-    },
-    randomNumber: function () {
-      let random10019999 = 1
-      let t = true
-      while (t) {
-        random10019999 = parseInt(Math.random() * (9999 - 1001) + 1001)
-        let i = 0
-        for (i = 0; i < this.arrayTem.length; i++) {
-          if (String(random10019999) === this.arrayTem[i].idfrom) {
-            break
-          }
-        }
-        if (i < this.arrayTem.length - 1) t = true
-        else t = false
-      }
-      return random10019999
     }
   }
 }
