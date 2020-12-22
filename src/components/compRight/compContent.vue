@@ -26,13 +26,13 @@
       </div>
     </div>
     <div class="flex-container">
-      <div @click="sortData" class="style col1" style="border-top-left-radius: 10px">arrayTem ID#</div>
-      <div class="style col2" @click="sortData">TemPlate Name</div>
-      <div class="style col3" @click="sortData">Type</div>
-      <div class="style col4" @click="sortData">Company</div>
-      <div class="style col5" @click="sortData">Version Date</div>
-      <div class="style col6" @click="sortData">Expiration D</div>
-      <div class="style col7" @click="sortData">ACTIVE</div>
+      <div @click="sortData" class="style col1" style="border-top-left-radius: 10px">Form ID# {{sortfor}}</div>
+      <div class="style col2" @click="sortData">TemPlate Name {{sortTem}}</div>
+      <div class="style col3" @click="sortData">Type {{sortTyp}}</div>
+      <div class="style col4" @click="sortData">Company {{sortCom}}</div>
+      <div class="style col5" @click="sortData">Version Date {{sortVer}}</div>
+      <div class="style col6" @click="sortData">Expiration D {{sortExp}}</div>
+      <div class="style col7" @click="sortData">ACTIVE {{sortACT}}</div>
       <div class="style col8" style="border-top-right-radius: 10px"></div>
     </div>
     <div id="tablefull">
@@ -41,14 +41,14 @@
           class="flex-container"
           v-for="(user,idx) in arrayTemtam"
           :key="idx"
-          v-on:dblclick="editLine"
+          @dblclick="editLine"
         >
           <div class="col1">{{ user.idfrom }}</div>
           <div class="col2" v-if="user.node2 == 'Edit'">{{ user.Temlate }}</div>
           <div class="col2" v-else-if="user.node2 == 'Cancel'">
             <input
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              @keyup.enter="confirmAddLine"
+              @keyup.esc="cancelAddLine"
               style="width: 90%; flex-grow: 1"
               type="text"
               class="create"
@@ -59,8 +59,8 @@
           </div>
           <div class="col2" v-else-if="user.node2 == 'Cancel_row'">
             <input
-              v-on:keyup.esc="cancelEdit"
-              v-on:keyup.enter="confirmEnter"
+              @keyup.esc="cancelEdit"
+              @keyup.enter="confirmEnter"
               style="width: 90%; flex-grow: 1"
               type="text"
               class="create"
@@ -72,8 +72,8 @@
           <div class="col3" v-if="user.node2 == 'Edit'">{{ user.Type }}</div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <select
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              @keyup.enter="confirmAddLine"
+              @keyup.esc="cancelAddLine"
               style="width: 90%"
               class="create"
               v-model="Type"
@@ -86,8 +86,8 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <select
-              v-on:keyup.enter="confirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              @keyup.enter="confirmEnter"
+              @keyup.esc="cancelEdit"
               style="width: 90%"
               class="create"
               v-model="arrayTemtam[index_edit].Type"
@@ -101,8 +101,8 @@
           <div class="col4" v-if="user.node2 == 'Edit'">{{ user.Company }}</div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <input
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              @keyup.enter="confirmAddLine"
+              @keyup.esc="cancelAddLine"
               style="width: 90%"
               v-model="Company"
               type="text"
@@ -114,8 +114,8 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <input
-              v-on:keyup.enter="confirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              @keyup.enter="confirmEnter"
+              @keyup.esc="cancelEdit"
               style="width: 90%"
               v-model="arrayTemtam[index_edit].Company"
               type="text"
@@ -130,8 +130,8 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <input
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              @keyup.enter="confirmAddLine"
+              @keyup.esc="cancelAddLine"
               style="width: 90%"
               v-model="VersionDate"
               type="date"
@@ -142,8 +142,8 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <input
-              v-on:keyup.enter="confirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              @keyup.enter="confirmEnter"
+              @keyup.esc="cancelEdit"
               style="width: 90%"
               v-model="arrayTemtam[index_edit].VersionDate"
               type="date"
@@ -157,8 +157,8 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <input
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              @keyup.enter="confirmAddLine"
+              @keyup.esc="cancelAddLine"
               style="width: 90%"
               v-model="ExpirationDate"
               type="date"
@@ -169,8 +169,8 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <input
-              v-on:keyup.enter="confirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              @keyup.enter="confirmEnter"
+              @keyup.esc="cancelEdit"
               style="width: 90%"
               v-model="arrayTemtam[index_edit].ExpirationDate"
               type="date"
@@ -182,8 +182,8 @@
           <div class="col7" v-if="user.node2 == 'Edit'">{{ user.Active }}</div>
           <div class="col3" v-else-if="user.node2 == 'Cancel'">
             <select
-              v-on:keyup.enter="confirmAddLine"
-              v-on:keyup.esc="cancelAddLine"
+              @keyup.enter="confirmAddLine"
+              @keyup.esc="cancelAddLine"
               v-model="Active"
               style="width: 90%"
               class="create"
@@ -196,8 +196,8 @@
           </div>
           <div class="col3" v-else-if="user.node2 == 'Cancel_row'">
             <select
-              v-on:keyup.enter="confirmEnter"
-              v-on:keyup.esc="cancelEdit"
+              @keyup.enter="confirmEnter"
+              @keyup.esc="cancelEdit"
               v-model="arrayTemtam[index_edit].Active"
               style="width: 90%"
               class="create"
@@ -250,22 +250,23 @@
         </div>
       </div>
       <div id="nextpage">
-        <button class="nextpage" name="button" type="button">
+        <button class="nextpage" name="button" type="button " v-on:click="back">
           <a href="javascript:;" class="next"> &larr; </a>
         </button>
-        <button class="nextpage" name="button" type="button">
+        <label>{{trang}}</label>
+        <button class="nextpage" name="button" type="button" v-on:click="next">
           <a href="javascript:;" class="next"> &rarr; </a>
         </button>
       </div>
 
     </div>
     <compCreateUnion
-     :evenRemove="evenRemove"
      @confirmRemove="confirmRemove"
      @cancelRemove="cancelRemove"
      @createTem="createTem"
      @confirmCancel="confirmCancel"
      :confirmBoolean="confirmBoolean"
+     :evenRemove="evenRemove"
      v-show="showModel"
     />
     <compFilter
@@ -292,8 +293,11 @@ export default {
   data () {
     return {
       evenRemove: {},
+      trangtam: '',
+      trang: 0,
       showFilter: false,
       showModel: false,
+      typeSort: 'up',
       confirmBoolean: '',
       index_edit: '',
       idarrayTem: '',
@@ -302,13 +306,20 @@ export default {
       Company: '',
       VersionDate: '',
       ExpirationDate: '',
+      sortfor: '',
+      sortTem: '',
+      sortTyp: '',
+      sortCom: '',
+      sortVer: '',
+      sortExp: '',
+      sortACT: '',
       Active: '',
       search: '',
       arrayTemtam: [],
       arrayTem: [
         // Temlate: this.Temlate,Type: this.Type, Company: this.Company,VersionDate: this.VersionDate, ExpirationDate: expirationDate, Active: this.Active
         {
-          idfrom: '1115',
+          idfrom: '1101',
           Temlate: 'bahaha hihhi ',
           Type: 'Production',
           Company: 'Peptico',
@@ -319,7 +330,84 @@ export default {
           node2: 'Edit'
         },
         {
-          idfrom: '1113',
+          idfrom: '1102',
+          Temlate: 'bahaha hihhi ',
+          Type: 'Production',
+          Company: 'Peptico',
+          VersionDate: '17-12-2020',
+          ExpirationDate: '17-12-2020',
+          Active: 'Active',
+          node1: 'Remove',
+          node2: 'Edit'
+        },
+        {
+          idfrom: '1103',
+          Temlate: 'bahaha hihhi ',
+          Type: 'Production',
+          Company: 'Peptico',
+          VersionDate: '17-12-2020',
+          ExpirationDate: '17-12-2020',
+          Active: 'Active',
+          node1: 'Remove',
+          node2: 'Edit'
+        },
+        {
+          idfrom: '1104',
+          Temlate: 'bahaha hihhi ',
+          Type: 'Production',
+          Company: 'Peptico',
+          VersionDate: '17-12-2020',
+          ExpirationDate: '17-12-2020',
+          Active: 'Active',
+          node1: 'Remove',
+          node2: 'Edit'
+        },
+        {
+          idfrom: '1105',
+          Temlate: 'bahaha hihhi ',
+          Type: 'Production',
+          Company: 'Peptico',
+          VersionDate: '17-12-2020',
+          ExpirationDate: '17-12-2020',
+          Active: 'Active',
+          node1: 'Remove',
+          node2: 'Edit'
+        },
+        {
+          idfrom: '1106',
+          Temlate: 'bahaha hihhi ',
+          Type: 'Production',
+          Company: 'Peptico',
+          VersionDate: '17-12-2020',
+          ExpirationDate: '17-12-2020',
+          Active: 'Active',
+          node1: 'Remove',
+          node2: 'Edit'
+        },
+        {
+          idfrom: '1107',
+          Temlate: 'bahaha hihhi ',
+          Type: 'Production',
+          Company: 'Peptico',
+          VersionDate: '17-12-2020',
+          ExpirationDate: '17-12-2020',
+          Active: 'Active',
+          node1: 'Remove',
+          node2: 'Edit'
+        },
+        {
+          idfrom: '1108',
+          Temlate: 'bahaha hihhi ',
+          Type: 'Production',
+          Company: 'Peptico',
+          VersionDate: '17-12-2020',
+          ExpirationDate: '17-12-2020',
+          Active: 'Active',
+          node1: 'Remove',
+          node2: 'Edit'
+        },
+        {
+          idfrom: '1109',
           Temlate: 'a3325243-AFM-B6-TV-RADIOCOMMERCIALS-11-15',
           Type: 'Production',
           Company: 'Haitico',
@@ -330,7 +418,7 @@ export default {
           node2: 'Edit'
         },
         {
-          idfrom: '1111',
+          idfrom: '1110',
           Temlate: 'huhuhahahahaahahahaah',
           Type: 'Payoll',
           Company: 'Haitico',
@@ -341,7 +429,7 @@ export default {
           node2: 'Edit'
         },
         {
-          idfrom: '1114',
+          idfrom: '1111',
           Temlate: 'c324-AFM-B6-TV-RADIOCOMMERCIALS-11-15',
           Type: 'Production',
           Company: 'Peptico',
@@ -366,8 +454,8 @@ export default {
     }
   },
   created () {
-    for (let [, v] of this.arrayTem.entries()) {
-      this.arrayTemtam.push(v)
+    for (let i = 0; i < 5; i++) {
+      this.arrayTemtam.push(this.arrayTem[i])
     }
   },
   computed: {
@@ -385,9 +473,55 @@ export default {
           this.arrayTemtam.splice(i, 1)
         }
       }
+    },
+    trang () {
+      if (this.trang < 0) {
+        this.trang = this.trangtam
+      }
+      // let lengthrow = this.arrayTem.length
+      // let indexPage = parseInt(lengthrow / 5)
+      this.arrayTemtam = []
+      // let end
+      let trangtam = 5 * (this.trang + 1)
+      // if (indexPage === this.trang) { end = this.arrayTem.length - 1 } else {
+      //   end = indexPage * 5 + 5
+      // }
+      let endArray
+      if (trangtam > this.arrayTem.length) endArray = this.arrayTem.length
+      else endArray = trangtam
+      // if (trangtam === this.arrayTem.length / 5) {
+      for (let i = trangtam - 5; i < endArray; i++) {
+        this.arrayTemtam.push(this.arrayTem[i])
+      }
     }
   },
   methods: {
+    back (e) {
+      let indexPage
+      let lengthrow = this.arrayTem.length
+      if (lengthrow % 5 !== 0) {
+        indexPage = parseInt(lengthrow / 5)
+      } else {
+        indexPage = parseInt(lengthrow / 5) - 1
+      }
+      this.trang = this.trang - 1
+      if (this.trang < 0) {
+        this.trang = indexPage
+      }
+    },
+    next (e) {
+      let indexPage
+      let lengthrow = this.arrayTem.length
+      if (lengthrow % 5 !== 0) {
+        indexPage = parseInt(lengthrow / 5)
+      } else {
+        indexPage = parseInt(lengthrow / 5) - 1
+      }
+      this.trang = this.trang + 1
+      if (this.trang > indexPage) {
+        this.trang = 0
+      }
+    },
     edit (event) {
       let elementtable = event.target.parentNode.parentNode.parentNode.parentNode.childNodes
       let getid = elementtable[0].innerHTML
@@ -431,9 +565,8 @@ export default {
       this.arrayTem[-2].node2 = 'Edit'
       this.dropLeft(event.target.parentNode.parentNode.childNodes[0])
       this.arrayTemtam = []
-      for (const [i] of this.arrayTem.entries()) {
-        this.arrayTemtam.push(this.arrayTem[i])
-      }
+      this.trangtam = this.trang
+      this.trang = -10
     },
     confirmEdit (e) {
       const lengtharrayTem = e.target.parentNode.parentNode
@@ -480,15 +613,17 @@ export default {
         })
         this.arrayTem.splice(index, 1, DataAddfilterC)
         this.arrayTemtam = []
+        this.trangtam = this.trang
+        this.trang = -10
         // for (let i in this.arrayTem) {
         //   this.arrayTemtam.push(this.arrayTem[i])
         // }
         // for (const v of this.arrayTem) {
         //   this.arrayTemtam.push(v)
         // }
-        this.arrayTem.forEach((v, i) => // foreach duyetj từ 0 - length
-          this.arrayTemtam.push(v)
-        )
+        // this.arrayTem.forEach((v, i) => // foreach duyetj từ 0 - length
+        //   this.arrayTemtam.push(v)
+        // )
         // for (let i = 0; i <= this.arrayTem.length - 1; i++) {
         //   this.arrayTemtam.push(this.arrayTem[i])
         // }
@@ -515,10 +650,12 @@ export default {
         }
       }
       this.arrayTem.splice(index, 1, this.arrayTem[-2])
-      this.arrayTemtam = []
-      for (let v of this.arrayTem) {
-        this.arrayTemtam.push(v)
-      }
+      // this.arrayTemtam = []
+      // for (let v of this.arrayTem) {
+      //   this.arrayTemtam.push(v)
+      // }
+      this.trangtam = this.trang
+      this.trang = -10
       // for (let i = 0; i <= this.arrayTem.length - 1; i++) {
       //   this.arrayTemtam.push(this.arrayTem[i])
       // }
@@ -561,10 +698,12 @@ export default {
         this.arrayTem.splice(index, 1, data1)
       }
       this.arrayTem[-2].node2 = 'Edit'
-      this.arrayTemtam = []
-      for (let v of this.arrayTem) {
-        this.arrayTemtam.push(v)
-      }
+      // this.arrayTemtam = []
+      // for (let v of this.arrayTem) {
+      //   this.arrayTemtam.push(v)
+      // }
+      this.trangtam = this.trang
+      this.trang = -10
     },
     removeLine (e) {
       this.showModel = true
@@ -609,10 +748,12 @@ export default {
       } else {
         alert('đang có trường xử lý')
       }
-      this.arrayTemtam = []
-      for (let v of this.arrayTem) {
-        this.arrayTemtam.push(v)
-      }
+      this.trangtam = this.trang
+      this.trang = -10
+      // this.arrayTemtam = []
+      // for (let v of this.arrayTem) {
+      //   this.arrayTemtam.push(v)
+      // }
     },
     cancelRemove (e) {
       this.showModel = e
@@ -623,13 +764,11 @@ export default {
       // console.log("apphihi"+ this.create_confirm_boolean)
       // this.$emit('changeeven',e)
       this.arrayTemtam = []
-      for (let v of this.arrayTem) {
-        this.arrayTemtam.push(v)
-      }
+      this.trangtam = this.trang
+      this.trang = -10
     },
     createTem (e) {
       this.showModel = false
-      let i = 0
       let check = true
       e.ExpirationDate = this.convertDate(e.ExpirationDate, '-', 'yyyy_mm_dd')
       e.VersionDate = this.convertDate(e.VersionDate, '-', 'yyyy_mm_dd')
@@ -637,7 +776,7 @@ export default {
       if (this.arrayTem.length === 0) { this.arrayTem[-1] = e }
       // if (this.arrayTem[this.arrayTem.length - 1].node2 !== 'Cancel') {
       //   this.arrayTem.push(e) // cập nhật lại giá trị arrayTem
-      for (i = 0; i < this.arrayTem.length; i++) {
+      for (let [i] of this.arrayTem.entries()) {
         if (this.arrayTem[i].node2 === 'Cancel_row' || this.arrayTem[i].node2 === 'Cancel') {
           check = false
         }
@@ -650,9 +789,7 @@ export default {
       this.arrayTem.Temlate = this.arrayTem.Temlate + ' '
       this.create_confirm_boolean = e.return_create_confirm_boolean
       this.arrayTemtam = []
-      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
-        this.arrayTemtam.push(this.arrayTem[i])
-      }
+      this.trang = -10
     },
     confirmEnter (e) {
       this.confirmEdit(e)
@@ -672,9 +809,8 @@ export default {
         node1: 'Confirm',
         node2: 'Cancel'
       }
-      let i = 0
       let check = true
-      for (i = 0; i < this.arrayTem.length; i++) {
+      for (let [i] of this.arrayTem.entries()) {
         if (this.arrayTem[i].node2 === 'Cancel_row' || this.arrayTem[i].node2 === 'Cancel') {
           check = false
         }
@@ -683,10 +819,15 @@ export default {
         data.idfrom = this.randomNumber()
         this.arrayTem.push(data)
       }
-      this.arrayTemtam = []
-      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
-        this.arrayTemtam.push(this.arrayTem[i])
-      }
+      // this.arrayTemtam = []
+      // for (let [, v] of this.arrayTem.entries()) {
+      //   this.arrayTemtam.push(v)
+      // }
+      let indexPage
+      let lengthrow = this.arrayTem.length
+      indexPage = parseInt(lengthrow / 5)
+      this.trangtam = indexPage
+      this.trang = -10
       this.Temlate = ''
       this.Type = ''
       this.Company = ''
@@ -727,10 +868,12 @@ export default {
         //   this.VersionDate = "";
         //   expirationDate = "";
         //   this.Active = "";
-        this.arrayTemtam = []
-        for (let i = 0; i <= this.arrayTem.length - 1; i++) {
-          this.arrayTemtam.push(this.arrayTem[i])
-        }
+        // this.arrayTemtam = []
+        // for (let [, v] of this.arrayTem.entries()) {
+        //   this.arrayTemtam.push(v)
+        // }
+        this.trangtam = this.trang
+        this.trang = -10
         // cập nhật rỗng cho các input khi them line mới
         this.idarrayTem = ''
         this.Temlate = ''
@@ -744,11 +887,227 @@ export default {
     cancelAddLine (e) {
       this.arrayTem.pop()
       this.arrayTemtam = []
-      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
-        this.arrayTemtam.push(this.arrayTem[i])
+      for (let [, v] of this.arrayTem.entries()) {
+        this.arrayTemtam.push(v)
       }
     },
     sortData (e) {
+      let tt = e.target.innerHTML.slice(0, 4)
+      this.arrayTemtam = []
+      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
+        this.arrayTemtam.push(this.arrayTem[i])
+      }
+      switch (tt) {
+        case 'Form':
+          this.sortTem = ''
+          this.sortTyp = ''
+          this.sortCom = ''
+          this.sortVer = ''
+          this.sortExp = ''
+          this.sortACT = ''
+          if (this.typeSort === 'up') {
+            for (let i = 0; i < this.arrayTemtam.length - 1; i++) { // buble sort
+              for (let j = this.arrayTemtam.length - 1; j > 0; j--) {
+                if (this.arrayTemtam[j].idfrom < this.arrayTemtam[ j - 1 ].idfrom) {
+                  let tam = {}
+                  tam = this.arrayTemtam[j]
+                  this.arrayTemtam[j] = this.arrayTemtam[ j - 1 ]
+                  this.arrayTemtam[ j - 1 ] = tam
+                }
+              }
+            }
+            this.sortfor = '↓'
+            this.typeSort = 'down'
+          } else {
+            for (let i = 0; i < this.arrayTemtam.length - 1; i++) { // buble sort
+              for (let j = this.arrayTemtam.length - 1; j > 0; j--) {
+                if (this.arrayTemtam[j].idfrom > this.arrayTemtam[ j - 1 ].idfrom) {
+                  let tam = {}
+                  tam = this.arrayTemtam[j]
+                  this.arrayTemtam[j] = this.arrayTemtam[ j - 1 ]
+                  this.arrayTemtam[ j - 1 ] = tam
+                }
+              }
+            }
+            this.sortfor = '↑'
+            this.typeSort = 'up'
+          }
+
+          break
+        case 'Type':
+          this.sortfor = ''
+          this.sortTem = ''
+          this.sortCom = ''
+          this.sortVer = ''
+          this.sortExp = ''
+          this.sortACT = ''
+          if (this.typeSort === 'up') {
+            this.arrayTemtam.sort((a, b) => {
+              let titleA = a.Type.toLowerCase()
+              let titleB = b.Type.toLowerCase()
+              if (titleA < titleB) return -1
+              if (titleA > titleB) return 1
+              return 0
+            })
+            this.sortTyp = '↓'
+            this.typeSort = 'down'
+          } else {
+            this.arrayTemtam.sort((a, b) => {
+              let titleA = a.Type.toLowerCase()
+              let titleB = b.Type.toLowerCase()
+              if (titleA < titleB) return 1
+              if (titleA > titleB) return -1
+              return 0
+            })
+            this.sortTyp = '↑'
+            this.typeSort = 'up'
+          }
+          break
+        case 'TemP':
+          this.sortfor = ''
+          this.sortTyp = ''
+          this.sortCom = ''
+          this.sortVer = ''
+          this.sortExp = ''
+          this.sortACT = ''
+          if (this.typeSort === 'up') {
+            this.arrayTemtam.sort((a, b) => {
+              let titleA = a.Temlate.toLowerCase()
+              let titleB = b.Temlate.toLowerCase()
+              if (titleA < titleB) return -1
+              if (titleA > titleB) return 1
+              return 0
+            })
+            this.sortTem = '↓'
+            this.typeSort = 'down'
+          } else {
+            this.arrayTemtam.sort((a, b) => {
+              let titleA = a.Temlate.toLowerCase()
+              let titleB = b.Temlate.toLowerCase()
+              if (titleA < titleB) return 1
+              if (titleA > titleB) return -1
+              return 0
+            })
+            this.sortTem = '↑'
+            this.typeSort = 'up'
+          }
+          break
+        case 'Comp':
+          this.sortfor = ''
+          this.sortTem = ''
+          this.sortTyp = ''
+          this.sortVer = ''
+          this.sortExp = ''
+          this.sortACT = ''
+          if (this.typeSort === 'up') {
+            this.arrayTemtam.sort((a, b) => {
+              let titleA = a.Company.toLowerCase()
+              let titleB = b.Company.toLowerCase()
+              if (titleA < titleB) return -1
+              if (titleA > titleB) return 1
+              return 0
+            })
+            this.sortCom = '↓'
+            this.typeSort = 'down'
+          } else {
+            this.arrayTemtam.sort((a, b) => {
+              let titleA = a.Company.toLowerCase()
+              let titleB = b.Company.toLowerCase()
+              if (titleA < titleB) return 1
+              if (titleA > titleB) return -1
+              return 0
+            })
+            this.sortCom = '↑'
+            this.typeSort = 'up'
+          }
+          break
+        case 'ACTI':
+          this.sortfor = ''
+          this.sortTem = ''
+          this.sortTyp = ''
+          this.sortCom = ''
+          this.sortVer = ''
+          this.sortExp = ''
+          if (this.typeSort === 'up') {
+            this.arrayTemtam.sort((a, b) => {
+              let titleA = a.Active.toLowerCase()
+              let titleB = b.Active.toLowerCase()
+              if (titleA < titleB) return -1
+              if (titleA > titleB) return 1
+              return 0
+            })
+            this.sortACT = '↓'
+            this.typeSort = 'down'
+          } else {
+            this.arrayTemtam.sort((a, b) => {
+              let titleA = a.Active.toLowerCase()
+              let titleB = b.Active.toLowerCase()
+              if (titleA < titleB) return 1
+              if (titleA > titleB) return -1
+              return 0
+            })
+            this.sortACT = '↑'
+            this.typeSort = 'up'
+          }
+          break
+        case 'Expi':
+          this.sortfor = ''
+          this.sortTem = ''
+          this.sortTyp = ''
+          this.sortCom = ''
+          this.sortVer = ''
+          this.sortACT = ''
+          if (this.typeSort === 'up') {
+            this.arrayTemtam.sort((a, b) => {
+              a = a.ExpirationDate.toString().split('-')
+              b = b.ExpirationDate.toString().split('-')
+              return a[2] - b[2] || a[1] - b[1] || a[0] - b[0]
+            })
+            this.sortExp = '↓'
+            this.typeSort = 'down'
+          } else {
+            this.arrayTemtam.sort((a, b) => {
+              a = a.ExpirationDate.toString().split('-')
+              b = b.ExpirationDate.toString().split('-')
+              return b[2] - a[2] || b[1] - a[1] || b[0] - a[0]
+            })
+            this.sortExp = '↑'
+            this.typeSort = 'up'
+          }
+          break
+        case 'Vers':
+          this.sortfor = ''
+          this.sortTem = ''
+          this.sortTyp = ''
+          this.sortCom = ''
+          this.sortVer = ''
+          this.sortACT = ''
+          if (this.typeSort === 'up') {
+            this.arrayTemtam.sort((a, b) => {
+              a = a.VersionDate.toString().split('-')
+              b = b.VersionDate.toString().split('-')
+              return a[2] - b[2] || a[1] - b[1] || a[0] - b[0]
+            })
+            this.sortVer = '↓'
+            this.typeSort = 'down'
+          } else {
+            this.arrayTemtam.sort((a, b) => {
+              a = a.VersionDate.toString().split('-')
+              b = b.VersionDate.toString().split('-')
+              return b[2] - a[2] || b[1] - a[1] || b[0] - a[0]
+            })
+            this.sortVer = '↑'
+            this.typeSort = 'up'
+          }
+          break
+      }
+    },
+    removeline (e) {
+      this.evenremove = e
+      this.arrayTemtam = []
+      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
+        this.arrayTemtam.push(this.arrayTem[i])
+      }
     },
     filterData (e) {
       this.showFilter = true
@@ -778,11 +1137,36 @@ export default {
             this.arrayTemtam.splice(i, 1)
           }
         }
-        if (e.VersionDate !== '' && e.VersionDate[4] === '-') { e.VersionDate = this.convertDate(e.VersionDate, '-', 'yyyy_mm_dd') }
-        for (let i = this.arrayTemtam.length - 1; i >= 0; i--) {
-          if (this.arrayTemtam[i].VersionDate.includes(e.VersionDate)) {
-          } else {
-            this.arrayTemtam.splice(i, 1)
+
+        //  if (e.VersionDate !== '' && e.VersionDate[4] === '-') { e.VersionDate = this.convertDate(e.VersionDate, '-', 'yyyy_mm_dd') }
+        if (e.VersionDate1[4] === '-') {
+          for (let i = this.arrayTemtam.length - 1; i >= 0; i--) {
+            let numberVer
+            let ngayv = Number(this.arrayTemtam[i].VersionDate.slice(0, 2))
+            let thangv = Number(this.arrayTemtam[i].VersionDate.slice(3, 5))
+            let namv = Number(this.arrayTemtam[i].VersionDate.slice(6, 10))
+            numberVer = namv * 360 + thangv * 30 + ngayv
+            let ngay
+            let thang
+            let nam
+            let dayNumber1
+            let datNumber2
+            if (e.VersionDate1.slice(4, 5) === '-') {
+              ngay = Number(e.VersionDate1.slice(0, 4))
+              thang = Number(e.VersionDate1.slice(5, 7))
+              nam = Number(e.VersionDate1.slice(8, 10))
+              dayNumber1 = ngay * 360 + thang * 30 + nam
+            }
+            if (e.VersionDate2.slice(4, 5) === '-') {
+              ngay = Number(e.VersionDate2.slice(0, 4))
+              thang = Number(e.VersionDate2.slice(5, 7))
+              nam = Number(e.VersionDate2.slice(8, 10))
+              datNumber2 = ngay * 360 + thang * 30 + nam
+            }
+            if (dayNumber1 <= numberVer && numberVer <= datNumber2) {
+            } else {
+              this.arrayTemtam.splice(i, 1)
+            }
           }
         }
       } else {
@@ -795,9 +1179,10 @@ export default {
     allData (e) {
       this.showFilter = false
       this.arrayTemtam = []
-      for (let i = 0; i <= this.arrayTem.length - 1; i++) {
-        this.arrayTemtam.push(this.arrayTem[i])
+      for (let [, v] of this.arrayTem.entries()) {
+        this.arrayTemtam.push(v)
       }
+      this.trang = -10
     },
     dropLeft (e) { // kiểm tra dropup hiển thị và ẩn
       let checkEvent
@@ -999,16 +1384,16 @@ a {
   margin-right: 5px;
   padding-right: 5px;
 }
-
 .nextpage {
   padding: 0px;
 }
 #nextpage {
+  display: flex;
   position: absolute;
   width: 100%;
   text-align: center;
   bottom: 25px;
-  background-color: NONE;
+  background-color: none;
   width: 40px;
   margin-left: 50%;
 }

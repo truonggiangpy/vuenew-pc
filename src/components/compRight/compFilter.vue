@@ -53,7 +53,7 @@
               <div>
                 <label>Version Date</label>
                 <br>
-              <input class="create" type="date" v-model="versionDate1" />
+              <input class="create" type="date" v-model="VersionDate1" />
               <label>to</label>
               <input class="create" type="date" v-model="VersionDate2" />
               </div>
